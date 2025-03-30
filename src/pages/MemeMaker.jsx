@@ -313,8 +313,10 @@ const MemeMaker = () => {
         </h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left column - Controls */}
-          <div className="bg-gray-800 rounded-2xl shadow-xl p-6 h-[calc(100vh-8rem)] sticky top-8 flex flex-col">
+
+          
+          {/* Controls - Appears second on mobile */}
+          <div className="bg-gray-800 rounded-2xl shadow-xl p-6 h-[calc(100vh-8rem)] lg:sticky lg:top-8 flex flex-col order-2 lg:order-1">
             <h2 className="text-xl font-semibold text-white mb-6">Controls</h2>
             
             {/* Fixed buttons section */}
