@@ -1,15 +1,47 @@
-import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Array of Ghibli images for background columns with correct extensions
 const ghibliImages = [
-    'https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353373/ghibli_images/memes/pb1tdko2vetpgoz6cf8p.png',
-    'https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353377/ghibli_images/memes/lwl5iytgeaumxnocaqt8.png', 
-    'https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353375/ghibli_images/memes/vtoueahpxs0abxagibvu.png',
-    'https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353375/ghibli_images/memes/neg7ymzqopn8c7bgyoxo.png', 
-    'https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353374/ghibli_images/memes/yxoghkprnafo4hoggdlm.png',
-    'https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353372/ghibli_images/memes/smarayat7jxpeqnie5tm.png',
+  "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353373/ghibli_images/memes/pb1tdko2vetpgoz6cf8p.png",
+  "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353377/ghibli_images/memes/lwl5iytgeaumxnocaqt8.png",
+  "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353375/ghibli_images/memes/vtoueahpxs0abxagibvu.png",
+  "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353375/ghibli_images/memes/neg7ymzqopn8c7bgyoxo.png",
+  "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353374/ghibli_images/memes/yxoghkprnafo4hoggdlm.png",
+  "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353372/ghibli_images/memes/smarayat7jxpeqnie5tm.png",
+];
+
+// Featured popular memes data
+const popularMemes = [
+  {
+    id: 1,
+    title: "Woman yelling at a cat",
+    image:
+      "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353373/ghibli_images/memes/pb1tdko2vetpgoz6cf8p.png",
+    likes: 22453,
+  },
+  {
+    id: 2,
+    title: "Disaster Girl",
+    image:
+      "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353377/ghibli_images/memes/lwl5iytgeaumxnocaqt8.png",
+    likes: 81092,
+  },
+  {
+    id: 3,
+    title: "Two Buttons",
+    image:
+      "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353375/ghibli_images/memes/vtoueahpxs0abxagibvu.png",
+    likes: 39211,
+  },
+  {
+    id: 4,
+    title: "Drake No/Yes",
+    image:
+      "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743353375/ghibli_images/memes/neg7ymzqopn8c7bgyoxo.png",
+    likes: 56789,
+  },
 ];
 
 const LandingPage = () => {
@@ -19,7 +51,7 @@ const LandingPage = () => {
   const [totalHeight3, setTotalHeight3] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   const column1Ref = useRef(null);
   const column2Ref = useRef(null);
   const column3Ref = useRef(null);
@@ -33,26 +65,35 @@ const LandingPage = () => {
     }
     return shuffled;
   };
-  
+
   // Create duplicate arrays for seamless looping with random initial order
-  const column1Images = [...shuffleArray(ghibliImages), ...shuffleArray(ghibliImages)];
-  const column2Images = [...shuffleArray(ghibliImages), ...shuffleArray(ghibliImages)];
-  const column3Images = [...shuffleArray(ghibliImages), ...shuffleArray(ghibliImages)];
-  
+  const column1Images = [
+    ...shuffleArray(ghibliImages),
+    ...shuffleArray(ghibliImages),
+  ];
+  const column2Images = [
+    ...shuffleArray(ghibliImages),
+    ...shuffleArray(ghibliImages),
+  ];
+  const column3Images = [
+    ...shuffleArray(ghibliImages),
+    ...shuffleArray(ghibliImages),
+  ];
+
   // Check for mobile viewport
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
+    window.addEventListener("resize", checkMobile);
+
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
     };
   }, []);
-  
+
   // Calculate real height after images are loaded
   useEffect(() => {
     const calculateHeights = () => {
@@ -67,33 +108,33 @@ const LandingPage = () => {
       }
       setIsLoaded(true);
     };
-    
+
     // Add event listeners to all images
-    const imageElements = document.querySelectorAll('.ghibli-image');
+    const imageElements = document.querySelectorAll(".ghibli-image");
     let loadedCount = 0;
     const totalImages = imageElements.length;
-    
+
     const handleImageLoad = () => {
       loadedCount++;
       if (loadedCount === totalImages) {
         calculateHeights();
       }
     };
-    
-    imageElements.forEach(img => {
+
+    imageElements.forEach((img) => {
       if (img.complete) {
         handleImageLoad();
       } else {
-        img.addEventListener('load', handleImageLoad);
+        img.addEventListener("load", handleImageLoad);
       }
     });
-    
+
     // Fallback in case images don't load
     const timeout = setTimeout(calculateHeights, 2000);
-    
+
     return () => {
-      imageElements.forEach(img => {
-        img.removeEventListener('load', handleImageLoad);
+      imageElements.forEach((img) => {
+        img.removeEventListener("load", handleImageLoad);
       });
       clearTimeout(timeout);
     };
@@ -112,55 +153,64 @@ const LandingPage = () => {
         setTotalHeight3(column3Ref.current.offsetHeight / 2);
       }
     };
-    
-    window.addEventListener('resize', handleResize);
-    
+
+    window.addEventListener("resize", handleResize);
+
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [isLoaded]);
 
   // Animation variants for continuous loops
   const slideDownVariants1 = {
-    animate: isLoaded && totalHeight1 > 0 ? {
-      y: [-10, -totalHeight1 - 10],
-      transition: {
-        y: {
-          repeat: Infinity,
-          repeatType: "loop",
-          duration: 30,
-          ease: "linear",
-        }
-      }
-    } : {}
+    animate:
+      isLoaded && totalHeight1 > 0
+        ? {
+            y: [-10, -totalHeight1 - 10],
+            transition: {
+              y: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 30,
+                ease: "linear",
+              },
+            },
+          }
+        : {},
   };
-  
+
   const slideUpVariants = {
-    animate: isLoaded && totalHeight2 > 0 ? {
-      y: [-totalHeight2 - 10, -10],
-      transition: {
-        y: {
-          repeat: Infinity,
-          repeatType: "loop",
-          duration: 30,
-          ease: "linear",
-        }
-      }
-    } : {}
+    animate:
+      isLoaded && totalHeight2 > 0
+        ? {
+            y: [-totalHeight2 - 10, -10],
+            transition: {
+              y: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 30,
+                ease: "linear",
+              },
+            },
+          }
+        : {},
   };
-  
+
   const slideDownVariants3 = {
-    animate: isLoaded && totalHeight3 > 0 ? {
-      y: [-10, -totalHeight3 - 10],
-      transition: {
-        y: {
-          repeat: Infinity,
-          repeatType: "loop",
-          duration: 30,
-          ease: "linear",
-        }
-      }
-    } : {}
+    animate:
+      isLoaded && totalHeight3 > 0
+        ? {
+            y: [-10, -totalHeight3 - 10],
+            transition: {
+              y: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 30,
+                ease: "linear",
+              },
+            },
+          }
+        : {},
   };
 
   // Adjust the number of columns based on viewport width
@@ -169,14 +219,14 @@ const LandingPage = () => {
       // Single column for mobile
       return (
         <div className="w-full flex flex-col overflow-hidden px-2">
-          <motion.div 
+          <motion.div
             ref={column1Ref}
             className="flex flex-col gap-4"
             variants={slideDownVariants1}
             animate={isLoaded ? "animate" : ""}
           >
             {column1Images.map((img, i) => (
-              <img 
+              <img
                 key={`col1-${i}`}
                 src={img}
                 alt=""
@@ -191,14 +241,14 @@ const LandingPage = () => {
       return (
         <>
           <div className="w-1/3 flex flex-col overflow-hidden px-2">
-            <motion.div 
+            <motion.div
               ref={column1Ref}
               className="flex flex-col gap-4"
               variants={slideDownVariants1}
               animate={isLoaded ? "animate" : ""}
             >
               {column1Images.map((img, i) => (
-                <img 
+                <img
                   key={`col1-${i}`}
                   src={img}
                   alt=""
@@ -207,9 +257,9 @@ const LandingPage = () => {
               ))}
             </motion.div>
           </div>
-          
+
           <div className="w-1/3 flex flex-col overflow-hidden px-2">
-            <motion.div 
+            <motion.div
               ref={column2Ref}
               className="flex flex-col gap-4"
               variants={slideUpVariants}
@@ -225,9 +275,9 @@ const LandingPage = () => {
               ))}
             </motion.div>
           </div>
-          
+
           <div className="w-1/3 flex flex-col overflow-hidden px-2">
-            <motion.div 
+            <motion.div
               ref={column3Ref}
               className="flex flex-col gap-4"
               variants={slideDownVariants3}
@@ -249,44 +299,108 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gray-900">
-      {/* Background Image Columns */}
-      <div className="absolute inset-0 flex justify-between opacity-20">
-        {renderBackgroundColumns()}
-      </div>
+    <div className="bg-gray-900">
+      {/* Background and Hero Container */}
+      <div className="relative min-h-screen overflow-hidden">
+        {/* Background Image Columns */}
+        <div className="absolute inset-0 flex justify-between opacity-20">
+          {renderBackgroundColumns()}
+        </div>
 
-      {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 md:mb-8 tracking-tight"
-          >
-            Ghibli Meme Maker
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto"
-          >
-            Create your own memes inspired by the Studio Ghibli
-          </motion.p>
-          <motion.button
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/meme-maker')}
-            className="px-6 py-3 sm:px-7 sm:py-3.5 md:px-8 md:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base sm:text-lg font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-xl"
-          >
-            Create Your Meme
-          </motion.button>
+        {/* Hero Content */}
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 md:mb-8 tracking-tight relative"
+            >
+              Ghibli Meme Maker
+              <span className="text-sm md:text-base text-red-500 absolute -right-8 bottom-1">
+                Beta
+              </span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto"
+            >
+              Create your own memes inspired by the Studio Ghibli
+            </motion.p>
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/meme-maker")}
+              className="px-6 py-3 sm:px-7 sm:py-3.5 md:px-8 md:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base sm:text-lg font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-xl"
+            >
+              Create Your Meme
+            </motion.button>
+            
+          </div>
         </div>
       </div>
+
+      {/* Popular Ghibli Memes Section - Completely Separate Container */}
+      <section className="bg-gray-800 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="container mx-auto px-4 sm:px-6 lg:px-8"
+        >
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12 text-center">
+            Popular Ghibli Memes
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {popularMemes.map((meme) => (
+              <motion.div
+                key={meme.id}
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                className="bg-gray-900 rounded-xl overflow-hidden shadow-lg"
+              >
+                <div className="relative pb-[75%]">
+                  <img
+                    src={meme.image}
+                    alt={meme.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-white font-bold text-lg mb-1">
+                    {meme.title}
+                  </h3>
+                  <div className="flex items-center text-gray-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-1"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                    </svg>
+                    <span>{meme.likes.toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="px-4 pb-4">
+                  <button
+                    className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium text-sm"
+                    onClick={() => navigate(`/meme-maker`)}
+                  >
+                    Customize This Meme
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
     </div>
   );
 };
