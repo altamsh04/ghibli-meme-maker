@@ -3,4 +3,4 @@ Allow: /
 Allow: /meme-maker
 
 # Sitemap
-Sitemap: https://www.ghiblimemes.fun/sitemap.xml
+Sitemap: https://www.ghiblimemes.fun/sitemap.txt
