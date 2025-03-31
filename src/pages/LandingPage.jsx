@@ -69,7 +69,7 @@ const LandingPage = () => {
 
     // Open Graph (Facebook, LinkedIn)
     updateOrCreateMetaTag("og:title", "Ghibli Meme Maker - Create Studio Ghibli Inspired Memes", true);
-    updateOrCreateMetaTag("og:description", "Easily create and customize Studio Ghibli inspired memes with our free online tool. No sign-up required!", true);
+    updateOrCreateMetaTag("og:description", "Make and share Studio Ghibli memes online. Free Ghibli meme generator for Totoro, Spirited Away, and more. No login required!", true);
     updateOrCreateMetaTag("og:image", "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743365151/ghibli_images/assets/sqopiavaiukpml9eu2fd.png", true);
     updateOrCreateMetaTag("og:url", "https://www.ghiblimemes.fun", true);
     updateOrCreateMetaTag("og:type", "website", true);

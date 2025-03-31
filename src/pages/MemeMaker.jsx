@@ -31,7 +31,7 @@ const MemeMaker = () => {
     };
 
     // Standard Meta Tags
-    updateOrCreateMetaTag("description", "Create and customize your own Studio Ghibli inspired memes with our easy-to-use meme maker. No login required!");
+    updateOrCreateMetaTag("description", "Make and share Studio Ghibli memes online. Free Ghibli meme generator for Totoro, Spirited Away, and more. No login required!");
     updateOrCreateMetaTag("keywords", "Ghibli meme maker, Studio Ghibli memes, anime meme generator, anime meme maker, create memes online");
     updateOrCreateMetaTag("author", "Altamsh Bairagdar");
 
