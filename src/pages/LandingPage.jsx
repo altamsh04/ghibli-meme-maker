@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 // Array of Ghibli images for background columns with correct extensions
 const ghibliImages = [
@@ -300,6 +301,18 @@ const LandingPage = () => {
 
   return (
     <div className="bg-gray-900">
+      <Helmet>
+        <title>Ghibli Meme Maker - Create Studio Ghibli Inspired Memes</title>
+        <meta name="description" content="Create and customize your own Studio Ghibli inspired memes with our easy-to-use meme maker. No login required!" />
+        <meta name="keywords" content="ghibli, meme maker, studio ghibli, memes, anime memes" />
+        <meta property="og:title" content="Ghibli Meme Maker" />
+        <meta property="og:description" content="Create and customize your own Studio Ghibli inspired memes" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Ghibli Meme Maker" />
+        <meta name="twitter:description" content="Create and customize your own Studio Ghibli inspired memes" />
+      </Helmet>
+
       {/* Background and Hero Container */}
       <div className="relative min-h-screen overflow-hidden">
         {/* Background Image Columns */}
@@ -309,38 +322,44 @@ const LandingPage = () => {
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="text-center max-w-4xl mx-auto">
             <motion.h1
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 md:mb-8 tracking-tight relative"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight font-serif"
             >
-              Ghibli Meme Maker
-              <span className="text-sm md:text-base text-red-500 absolute -right-8 bottom-1">
-                Beta
-              </span>
+              Create Your Own Ghibli Memes
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto"
+              className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto"
             >
-              Create your own memes inspired by the Studio Ghibli
+              Transform your favorite Studio Ghibli moments into hilarious memes with our easy-to-use meme creator
             </motion.p>
-            <motion.button
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/meme-maker")}
-              className="px-6 py-3 sm:px-7 sm:py-3.5 md:px-8 md:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base sm:text-lg font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-xl cursor-pointer"
-            >
-              Create Your Meme
-            </motion.button>
-            
+            <div className="flex flex-col items-center gap-4">
+              <motion.button
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate("/meme-maker")}
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-lg font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-xl cursor-pointer"
+              >
+                Start Creating Now
+              </motion.button>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.9 }}
+                className="text-gray-400 text-base"
+              >
+                No login required 🙅❌
+              </motion.p>
+            </div>
           </div>
         </div>
       </div>
