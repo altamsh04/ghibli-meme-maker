@@ -11,9 +11,44 @@ import {
   Type,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
-
 const MemeMaker = () => {
+
+  useEffect(() => {
+    document.title = "Ghibli Meme Maker - Create Studio Ghibli Inspired Memes | No Login Required";
+
+    const updateOrCreateMetaTag = (name, content, isProperty = false) => {
+      let metaTag = document.querySelector(isProperty ? `meta[property='${name}']` : `meta[name='${name}']`);
+      if (!metaTag) {
+        metaTag = document.createElement("meta");
+        if (isProperty) {
+          metaTag.setAttribute("property", name);
+        } else {
+          metaTag.name = name;
+        }
+        document.head.appendChild(metaTag);
+      }
+      metaTag.setAttribute("content", content);
+    };
+
+    // Standard Meta Tags
+    updateOrCreateMetaTag("description", "Create and customize your own Studio Ghibli inspired memes with our easy-to-use meme maker. No login required!");
+    updateOrCreateMetaTag("keywords", "Ghibli meme maker, Studio Ghibli memes, anime meme generator, anime meme maker, create memes online");
+    updateOrCreateMetaTag("author", "Altamsh Bairagdar");
+
+    // Open Graph (Facebook, LinkedIn)
+    updateOrCreateMetaTag("og:title", "Ghibli Meme Maker - Create Studio Ghibli Inspired Memes", true);
+    updateOrCreateMetaTag("og:description", "Easily create and customize Studio Ghibli inspired memes with our free online tool. No sign-up required!", true);
+    updateOrCreateMetaTag("og:image", "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743365151/ghibli_images/assets/sqopiavaiukpml9eu2fd.png", true);
+    updateOrCreateMetaTag("og:url", "https://www.ghiblimemes.fun", true);
+    updateOrCreateMetaTag("og:type", "website", true);
+
+    // Twitter Meta Tags
+    updateOrCreateMetaTag("twitter:card", "summary_large_image", true);
+    updateOrCreateMetaTag("twitter:title", "Ghibli Meme Maker - Studio Ghibli Inspired Meme Generator", true);
+    updateOrCreateMetaTag("twitter:description", "Create and customize your favorite Studio Ghibli memes instantly. No login required!", true);
+    updateOrCreateMetaTag("twitter:image", "https://res.cloudinary.com/dzbgzkwim/image/upload/v1743365151/ghibli_images/assets/sqopiavaiukpml9eu2fd.png", true);
+  }, []);
+
   const [image, setImage] = useState(null);
   const [texts, setTexts] = useState([]);
   const [selectedTextIds, setSelectedTextIds] = useState([]);
@@ -543,22 +578,6 @@ const MemeMaker = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black py-8 px-4 sm:px-6 lg:px-8">
-      <Helmet>
-        <title>Ghibli Meme Maker - Create Studio Ghibli Inspired Memes</title>
-        <meta
-          name="description"
-          content="Create and customize your own Studio Ghibli inspired memes with our easy-to-use meme maker. No login required!"
-        />
-        <meta
-          name="keywords"
-          content="ghibli, meme maker, studio ghibli, memes, anime memes"
-        />
-        <meta property="og:title" content="Ghibli Meme Maker" />
-      </Helmet>
-      <meta
-        property="og:description"
-        content="Create and customize your own Studio Ghibli inspired memes"
-      />
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold text-center text-white mb-8 tracking-tight font-['Pacifico', cursive]">
           Ghibli Meme Maker
