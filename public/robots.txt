@@ -1,6 +1,3 @@
+# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Allow: /
-Allow: /meme-maker
-
-# Sitemap
-Sitemap: https://www.ghiblimemes.fun/sitemap.txt
+Disallow:
